@@ -1,1 +1,9 @@
+#single server command
 ssh tu_usuario_ssh@tu_servidor_ssh '[[ "$(uname)" == "Linux" ]] && nombre_servidor=$(hostname) && ips=$(hostname -I) && sistema_operativo=$(lsb_release -d | awk '\''{print $2, $3}'\'') && kernel=$(uname -r); [[ "$(uname)" == "SunOS" ]] && nombre_servidor=$(hostname) && ips=$(ifconfig -a | grep '\''inet '\'' | awk '\''{print $2}'\'') && sistema_operativo=$(uname -v) && kernel=$(uname -r); [[ "$(uname)" == "HP-UX" ]] && nombre_servidor=$(hostname) && ips=$(ifconfig lan0 | grep '\''inet '\'' | awk '\''{print $2}'\'') && sistema_operativo=$(uname -v) && kernel=$(uname -r); echo "{ \"nombre_servidor\": \"$nombre_servidor\", \"ips\": \"$ips\", \"sistema_operativo\": \"$sistema_operativo\", \"kernel\": \"$kernel\" }"'
+
+--------------------------------
+#ssh to parallel servers
+for server in ssh_server_1 ssh_server_2 ssh_server_3; do ssh your_ssh_user@$server " [[ \$(uname) == Linux ]] && server_name=\$(hostname) && ips=\$(hostname -I) && os=\$(lsb_release -d | awk '{print \$2, \$3}') && kernel=\$(uname -r); [[ \$(uname) == SunOS ]] && server_name=\$(hostname) && ips=\$(ifconfig -a | grep 'inet ' | awk '{print \$2}') && os=\$(uname -v) && kernel=\$(uname -r); [[ \$(uname) == HP-UX ]] && server_name=\$(hostname) && ips=\$(ifconfig lan0 | grep 'inet ' | awk '{print \$2}') && os=\$(uname -v) && kernel=\$(uname -r); echo \"{ \\\"server_name\\\": \\\"\$server_name\\\", \\\"ips\\\": \\\"\$ips\\\", \\\"os\\\": \\\"\$os\\\", \\\"kernel\\\": \\\"\$kernel\\\" }\"" >> information.txt; done
+
+#Replace your_ssh_user with your actual SSH username and provide the names or IP addresses of the servers you want to collect information from in the for loop. The command will collect information from each server and append it to a file named information.txt.
+--------------------------------
