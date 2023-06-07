@@ -1,0 +1,118 @@
+# My stuff just after getting some fresh OS to work
+
+
+> As lazy as I can be... just to save some clicks while installing a fresh Windows workstation
+
+## Intro
+
+Every single time that I have to refresh my OS it takes away from my day (actually *night*), a good number of hours to configure back all those tools and their configurations that I have customized along many many days of work. File syncing is super-easy as (e.g.) Office365 services has you covered. So documents, emails, libraries, etc. can be easily be recovered in almost no time. 
+
+But what about long hours of downloading packages, clicking next-next-next and mirroring configurations from your previous development environment?
+Well... this intends to be an initial approach.
+
+## Chocolatey
+
+Chocolatey is a software management solution unlike anything else you've ever experienced on Windows. Chocolatey brings the concepts of true package management to allow you to version things, manage dependencies and installation order, better inventory management, and other features. [link](https://chocolatey.org/why-chocolatey)
+
+* https://chocolatey.org/docs/installation
+
+* Installing `Chocolatey`
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+
+* Once installed, you can roll out basic software
+
+```cmd
+choco install googlechrome
+choco install firefoxesr
+choco install git
+choco install github
+choco install 7zip
+choco install python3
+choco install vlc
+choco install putty
+choco install winscp
+choco install keepass
+choco install greenshot
+choco install notepadplusplus.install
+choco install flashplayerppapi
+choco install flashplayerplugin
+choco install microsoft-teams
+choco install TeraCopy
+choco install procexp
+```
+
+### As well as the additional software:
+
+```cmd
+choco install vscode
+choco install insomnia-rest-api-client
+choco install virtualbox
+choco install virtualbox.extensionpack
+choco install virtualbox-guest-additions-guest.install
+choco install nodejs.install
+choco install rvtools
+choco install azure-cli
+```
+
+### RECOMMENDED: One line to get them all, suppressing confirmations:
+
+```powershell
+cinst googlechrome firefoxesr git github 7zip python3 vlc putty winscp keepass greenshot notepadplusplus.install flashplayerppapi flashplayerplugin microsoft-teams TeraCopy procexp vscode insomnia-rest-api-client virtualbox virtualbox.extensionpack virtualbox-guest-additions-guest.install nodejs.install rvtools azure-cli -y
+```
+
+---
+
+## Additional Configurations
+
+###  Settings Sync - Visual Studio Code
+
+* https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync   
+* https://github.com/shanalikhan/code-settings-sync
+
+
+---
+
+### Insomnia
+
+Insomnia stores data in Electron’s `appData` directory, which is differs depending on platform. The local database contain is distributed across files with the name `insomnia.${resourceName}.db`.
+
+* `%APPDATA%/Insomnia` on Windows
+* `$XDG_CONFIG_HOME/Insomnia` or `~/.config/Insomnia` on Linux
+* `~/Library/Application Support/Insomnia` on macOS
+
+The app data directory can also be shown by navigating to Help > Show App Data Folder.
+[source](https://support.insomnia.rest/article/48-frequently-asked-questions)
+
+---
+
+## Windows Subsystem for Linux
+
+[link](https://docs.microsoft.com/en-us/windows/wsl/install-win10)  
+
+1. Enable WSL
+
+```powershell
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+```
+
+2. Reboot 
+
+
+3. Install Linux Distribution of Choice
+
+* Debian
+
+```powershell
+Invoke-WebRequest -Uri https://aka.ms/wsl-debian-gnulinux -OutFile Debian.appx -UseBasicParsing
+Add-AppxPackage .\Debian.appx
+```
+
+* Ubuntu 18.04 (LTS)
+
+```
+Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu-1804.appx -UseBasicParsing
+Add-AppxPackage .\Ubuntu-1804.appx
+```
